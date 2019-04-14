@@ -1,0 +1,8 @@
+imports:
+    - { resource: vendor/drupol/php-conventions/config/php7/grumphp.yml }
+
+parameters:
+    extensions:
+        - drupol\PhpConventions\GrumphpTasksExtension
+    skip_tasks:
+        - phpstan

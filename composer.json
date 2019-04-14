@@ -1,0 +1,26 @@
+{
+    "name": "phptaskman/drupal",
+    "type": "robo-tasks",
+    "description": "TODO",
+    "authors": [
+        {
+            "name": "Pol Dellaiera",
+            "email": "pol.dellaiera@protonmail.com"
+        }
+    ],
+    "require": {
+        "jakeasmith/http_build_url": "^1",
+        "phptaskman/core": "dev-master",
+        "boedah/robo-drush": "^4.2"
+    },
+    "require-dev": {
+        "drupol/php-conventions": "^1.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpTaskman\\Drupal\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
