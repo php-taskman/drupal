@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace PhpTaskman\Drupal\Robo\Plugin\Commands;
 
 use Boedah\Robo\Task\Drush\loadTasks;

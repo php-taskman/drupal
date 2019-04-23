@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace PhpTaskman\Drupal\Robo\Task\Php;
 
 use Robo\Config\Config;
