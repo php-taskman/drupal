@@ -10,17 +10,15 @@
     ],
     "require": {
         "jakeasmith/http_build_url": "^1",
-        "phptaskman/core": "dev-master",
+        "phptaskman/core": "^0.1",
         "boedah/robo-drush": "^4.2"
     },
     "require-dev": {
-        "drupol/php-conventions": "^1.3"
+        "drupol/php-conventions": "^1.3.2"
     },
     "autoload": {
         "psr-4": {
             "PhpTaskman\\Drupal\\": "src"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
