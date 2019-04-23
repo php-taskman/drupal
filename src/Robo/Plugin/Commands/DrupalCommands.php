@@ -34,7 +34,7 @@ class DrupalCommands extends AbstractDrupalCommands
     {
         $host = \parse_url($options['base-url'], PHP_URL_HOST);
         $port = \parse_url($options['base-url'], PHP_URL_PORT);
-        $port = $port ?? 80;
+        $port = $port === null ? 80 : $port;
 
         return $this->taskServer($port)
             ->rawArg('-dalways_populate_raw_post_data=-1')
