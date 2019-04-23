@@ -75,7 +75,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements Filesy
     /**
      * {@inheritdoc}
      */
-    public function getConfigurationFile(): string
+    public function getConfigurationFile()
     {
         return __DIR__ . '/../../../../config/commands/drupal.yml';
     }
@@ -83,7 +83,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements Filesy
     /**
      * {@inheritdoc}
      */
-    public function getDefaultConfigurationFile(): string
+    public function getDefaultConfigurationFile()
     {
         return __DIR__ . '/../../../../config/default.yml';
     }
@@ -101,7 +101,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements Filesy
     /**
      * {@inheritdoc}
      */
-    public function getValuelessConfigurationKeys(): array
+    public function getValuelessConfigurationKeys()
     {
         return [
             'drupal:site-install' => [
