@@ -8,10 +8,11 @@ use Boedah\Robo\Task\Drush\loadTasks;
 use Consolidation\AnnotatedCommand\CommandData;
 use PhpTaskman\Core\Plugin\Task\CollectionFactory;
 use PhpTaskman\Drupal\Contract\FilesystemAwareInterface;
-use PhpTaskman\Drupal\Robo\Task\Php\LoadPhpTasks;
+use PhpTaskman\Drupal\Plugin\Task\WritePhpTask;
 use PhpTaskman\Drupal\Traits\FilesystemAwareTrait;
 use PhpTaskman\Core\Robo\Plugin\Commands\AbstractCommands;
 use Robo\Common\BuilderAwareTrait;
+use Robo\Common\ResourceExistenceChecker;
 use Robo\Contract\BuilderAwareInterface;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,13 +21,15 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Class AbstractDrupalCommands.
  */
-abstract class AbstractDrupalCommands extends AbstractCommands implements FilesystemAwareInterface, BuilderAwareInterface
+abstract class AbstractDrupalCommands extends AbstractCommands implements
+    FilesystemAwareInterface,
+    BuilderAwareInterface
 {
-    use FilesystemAwareTrait;
-    use LoadPhpTasks;
-    use loadTasks;
-    use BuilderAwareTrait;
     use \Robo\Task\File\loadTasks;
+    use BuilderAwareTrait;
+    use FilesystemAwareTrait;
+    use loadTasks;
+    use ResourceExistenceChecker;
 
     /**
      * Write Drush configuration files to given directories.
@@ -59,18 +62,22 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements Filesy
         'config-dir' => InputOption::VALUE_REQUIRED,
     ])
     {
-        $config = $this->getConfig();
-        $yaml = Yaml::dump($config->get('drupal.drush'));
+        $config = 'drupal.drush';
+        $yaml = Yaml::dump($this->getConfig()->get($config));
 
-        return $this->collectionBuilder()->addTaskList([
-            $this->taskWriteConfiguration(
-                $options['root'] . '/sites/default/drushrc.php',
-                $config
-            )->setConfigKey(
-                'drupal.drush'
-            ),
-            $this->taskWriteToFile($options['config-dir'] . '/drush.yml')->text($yaml),
-        ]);
+        $arguments = [
+            'file' => $options['root'] . '/sites/default/drushrc.php',
+            'config' => $config,
+            'blockStart' => '// Start settings processor block.',
+            'blockEnd' => '// End settings processor block.',
+        ];
+
+        return $this
+            ->collectionBuilder()
+            ->addTaskList([
+                $this->task(WritePhpTask::class)->setArguments($arguments),
+                $this->taskWriteToFile($options['config-dir'] . '/drush.yml')->text($yaml),
+            ]);
     }
 
     /**
@@ -140,9 +147,11 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements Filesy
             $this->taskFilesystemStack()->chmod($subdirPath, \octdec(775), 0000, true),
         ];
 
-        if (\file_exists($subdirPath . '/settings.php')) {
+        $settingsPath = $subdirPath . '/settings.php';
+
+        if ($this->checkResource($settingsPath, 'file')) {
             // Note that the chmod() method takes decimal values.
-            $collection[] = $this->taskFilesystemStack()->chmod($subdirPath . '/settings.php', \octdec(664));
+            $collection[] = $this->taskFilesystemStack()->chmod($settingsPath, \octdec(664));
         }
 
         return $this->collectionBuilder()->addTaskList($collection);
@@ -226,10 +235,14 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements Filesy
             $collection[] = $this->taskFilesystemStack()->copy($settings_default_path, $settings_path, true);
         }
 
-        $collection[] = $this->taskWriteConfiguration(
-            $settings_override_path,
-            $this->getConfig()
-        )->setConfigKey('drupal.settings');
+        $arguments = [
+            'file' => $settings_override_path,
+            'config' => 'drupal.settings',
+            'blockStart' => '// Start settings processor block.',
+            'blockEnd' => '// End settings processor block.',
+        ];
+
+        $collection[] = $this->task(WritePhpTask::class)->setTaskArguments($arguments);
 
         if (!$options['skip-permissions-setup']) {
             $collection[] = $this->permissionsSetup($options);
