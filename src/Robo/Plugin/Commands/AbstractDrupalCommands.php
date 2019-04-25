@@ -6,12 +6,13 @@ namespace PhpTaskman\Drupal\Robo\Plugin\Commands;
 
 use Boedah\Robo\Task\Drush\loadTasks;
 use Consolidation\AnnotatedCommand\CommandData;
-use PhpTaskman\Core\Robo\Plugin\Commands\AbstractCommands;
-use PhpTaskman\Core\Traits\ConfigurationTokensTrait;
+use PhpTaskman\Core\Plugin\Task\CollectionFactory;
 use PhpTaskman\Drupal\Contract\FilesystemAwareInterface;
 use PhpTaskman\Drupal\Robo\Task\Php\LoadPhpTasks;
 use PhpTaskman\Drupal\Traits\FilesystemAwareTrait;
-use PhpTaskman\Core\Robo\Task\CollectionFactory\LoadCollectionFactoryTasks;
+use PhpTaskman\Core\Robo\Plugin\Commands\AbstractCommands;
+use Robo\Common\BuilderAwareTrait;
+use Robo\Contract\BuilderAwareInterface;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Yaml\Yaml;
@@ -19,13 +20,13 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Class AbstractDrupalCommands.
  */
-abstract class AbstractDrupalCommands extends AbstractCommands implements FilesystemAwareInterface
+abstract class AbstractDrupalCommands extends AbstractCommands implements FilesystemAwareInterface, BuilderAwareInterface
 {
-    use ConfigurationTokensTrait;
     use FilesystemAwareTrait;
-    use LoadCollectionFactoryTasks;
     use LoadPhpTasks;
     use loadTasks;
+    use BuilderAwareTrait;
+    use \Robo\Task\File\loadTasks;
 
     /**
      * Write Drush configuration files to given directories.
@@ -366,7 +367,14 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements Filesy
     {
         $tasks = $this->getConfig()->get('drupal.post_install', []);
 
-        return $this->taskCollectionFactory($tasks);
+        $arguments = [
+            'tasks' => $tasks,
+        ];
+
+        /** @var CollectionFactory $collectionFactory */
+        $collectionFactory = $this->task(CollectionFactory::class);
+
+        return $collectionFactory->setTaskArguments($arguments);
     }
 
     /**
@@ -392,7 +400,14 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements Filesy
     {
         $tasks = $this->getConfig()->get('drupal.pre_install', []);
 
-        return $this->taskCollectionFactory($tasks);
+        $arguments = [
+            'tasks' => $tasks,
+        ];
+
+        /** @var CollectionFactory $collectionFactory */
+        $collectionFactory = $this->task(CollectionFactory::class);
+
+        return $collectionFactory->setTaskArguments($arguments);
     }
 
     /**
