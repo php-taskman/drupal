@@ -6,9 +6,9 @@ namespace PhpTaskman\Drupal\Robo\Plugin\Commands;
 
 use Boedah\Robo\Task\Drush\loadTasks;
 use Consolidation\AnnotatedCommand\CommandData;
-use PhpTaskman\Core\Plugin\Task\CollectionFactory;
+use PhpTaskman\CoreTasks\Plugin\Task\CollectionFactoryTask;
 use PhpTaskman\Drupal\Contract\FilesystemAwareInterface;
-use PhpTaskman\Drupal\Plugin\Task\WritePhpTask;
+use PhpTaskman\CoreTasks\Plugin\Task\WritePhpTask;
 use PhpTaskman\Drupal\Traits\FilesystemAwareTrait;
 use PhpTaskman\Core\Robo\Plugin\Commands\AbstractCommands;
 use Robo\Common\BuilderAwareTrait;
@@ -75,7 +75,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
         return $this
             ->collectionBuilder()
             ->addTaskList([
-                $this->task(WritePhpTask::class)->setArguments($arguments),
+                $this->task(WritePhpTask::class)->setTaskArguments($arguments),
                 $this->taskWriteToFile($options['config-dir'] . '/drush.yml')->text($yaml),
             ]);
     }
@@ -385,7 +385,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
         ];
 
         /** @var CollectionFactory $collectionFactory */
-        $collectionFactory = $this->task(CollectionFactory::class);
+        $collectionFactory = $this->task(CollectionFactoryTask::class);
 
         return $collectionFactory->setTaskArguments($arguments);
     }
@@ -418,7 +418,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
         ];
 
         /** @var CollectionFactory $collectionFactory */
-        $collectionFactory = $this->task(CollectionFactory::class);
+        $collectionFactory = $this->task(CollectionFactoryTask::class);
 
         return $collectionFactory->setTaskArguments($arguments);
     }
