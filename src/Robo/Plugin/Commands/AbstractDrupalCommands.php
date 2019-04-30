@@ -11,6 +11,7 @@ use PhpTaskman\Drupal\Traits\FilesystemAwareTrait;
 use PhpTaskman\Core\Robo\Plugin\Commands\AbstractCommands;
 use Robo\Common\BuilderAwareTrait;
 use Robo\Common\ResourceExistenceChecker;
+use Robo\Common\TaskIO;
 use Robo\Contract\BuilderAwareInterface;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\Console\Input\InputOption;
@@ -28,6 +29,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
     use FilesystemAwareTrait;
     use loadTasks;
     use ResourceExistenceChecker;
+    use TaskIO;
 
     /**
      * Write Drush configuration files to given directories.
