@@ -140,21 +140,14 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
     ])
     {
         $subdirPath = $options['root'] . '/sites/' . $options['sites-subdir'];
-
-        // Define collection of tasks.
-        $collection = [
-            // Note that the chmod() method takes decimal values.
-            $this->taskFilesystemStack()->chmod($subdirPath, \octdec(775), 0000, true),
-        ];
-
         $settingsPath = $subdirPath . '/settings.php';
 
-        if ($this->checkResource($settingsPath, 'file')) {
+        return $this->collectionBuilder()->addTaskList([
             // Note that the chmod() method takes decimal values.
-            $collection[] = $this->taskFilesystemStack()->chmod($settingsPath, \octdec(664));
-        }
-
-        return $this->collectionBuilder()->addTaskList($collection);
+            $this->taskFilesystemStack()->chmod($subdirPath, \octdec(775), 0000, true),
+            // Note that the chmod() method takes decimal values.
+            $this->taskFilesystemStack()->chmod($settingsPath, \octdec(664))
+        ]);
     }
 
     /**
