@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace PhpTaskman\Drupal\Robo\Plugin\Commands;
 
+use Robo\Common\TaskIO;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -11,6 +12,8 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class DrupalCommands extends AbstractDrupalCommands
 {
+    use TaskIO;
+
     /**
      * Run PHP server.
      *
