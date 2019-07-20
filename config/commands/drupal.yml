@@ -24,6 +24,7 @@ command:
                 # @deprecated
                 # Should only be used with Drupal 8.5 and lower. Use "existing-config".
                 config-dir: ${drupal.site.config_dir}
+                existing-config: ${drupal.site.existing_config}
         drush-setup:
             options:
                 config-dir: ${drupal.root}/drush
