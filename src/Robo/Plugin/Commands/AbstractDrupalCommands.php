@@ -304,7 +304,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
         'database-name' => InputOption::VALUE_REQUIRED,
         'sites-subdir' => InputOption::VALUE_REQUIRED,
         'config-dir' => InputOption::VALUE_REQUIRED,
-        'existing-config' => false,
+        'existing-config' => InputOption::VALUE_OPTIONAL,
         'skip-permissions-setup' => false,
     ])
     {
@@ -336,11 +336,8 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
             ->dbUrl($dbUrl)
             ->sitesSubdir($options['sites-subdir'])
             ->disableUpdateStatusModule()
+            ->existingConfig($options['existing-config'])
             ->siteInstall($options['site-profile']);
-
-        if (!empty($options['existing-config'])) {
-            $task->option('existing-config');
-        }
 
         // Define collection of tasks.
         $collection = [
