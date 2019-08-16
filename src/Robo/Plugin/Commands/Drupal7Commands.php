@@ -24,8 +24,8 @@ class Drupal7Commands extends DrupalCommands
  * Keep this code block at the end of the file.
  */
 \$conf_path = conf_path();
-if (file_exists(DRUPAL_ROOT . '/' . \$conf_path . '/${settings_override_filename}')) {
-  include DRUPAL_ROOT . '/' . \$conf_path . '/${settings_override_filename}';
+if (file_exists(DRUPAL_ROOT . '/' . \$conf_path . '/{$settings_override_filename}')) {
+  include DRUPAL_ROOT . '/' . \$conf_path . '/{$settings_override_filename}';
 }
 EOF;
     }

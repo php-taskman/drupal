@@ -43,6 +43,7 @@ abstract class BaseConfiguration extends Write implements BaseConfigurationInter
      * BaseConfiguration constructor.
      *
      * @param mixed $filename
+     * @param Config $config
      */
     public function __construct($filename, Config $config)
     {

@@ -2,7 +2,5 @@ imports:
     - { resource: vendor/drupol/php-conventions/config/php56/grumphp.yml }
 
 parameters:
-    extensions:
-        - drupol\PhpConventions\GrumphpTasksExtension
     skip_tasks:
         - phpstan

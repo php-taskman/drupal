@@ -4,11 +4,11 @@ namespace PhpTaskman\Drupal\Robo\Plugin\Commands;
 
 use Boedah\Robo\Task\Drush\loadTasks;
 use Consolidation\AnnotatedCommand\CommandData;
-use PhpTaskman\CoreTasks\Plugin\Task\CollectionFactoryTask;
-use PhpTaskman\Drupal\Contract\FilesystemAwareInterface;
-use PhpTaskman\CoreTasks\Plugin\Task\WritePhpTask;
-use PhpTaskman\Drupal\Traits\FilesystemAwareTrait;
 use PhpTaskman\Core\Robo\Plugin\Commands\AbstractCommands;
+use PhpTaskman\CoreTasks\Plugin\Task\CollectionFactoryTask;
+use PhpTaskman\CoreTasks\Plugin\Task\WritePhpTask;
+use PhpTaskman\Drupal\Contract\FilesystemAwareInterface;
+use PhpTaskman\Drupal\Traits\FilesystemAwareTrait;
 use Robo\Common\BuilderAwareTrait;
 use Robo\Common\ResourceExistenceChecker;
 use Robo\Common\TaskIO;
@@ -21,8 +21,8 @@ use Symfony\Component\Yaml\Yaml;
  * Class AbstractDrupalCommands.
  */
 abstract class AbstractDrupalCommands extends AbstractCommands implements
-    FilesystemAwareInterface,
-    BuilderAwareInterface
+    BuilderAwareInterface,
+    FilesystemAwareInterface
 {
     use \Robo\Task\File\loadTasks;
     use BuilderAwareTrait;
@@ -146,7 +146,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
             // Note that the chmod() method takes decimal values.
             $this->taskFilesystemStack()->chmod($subdirPath, \octdec(775), 0000, true),
             // Note that the chmod() method takes decimal values.
-            $this->taskFilesystemStack()->chmod($settingsPath, \octdec(664))
+            $this->taskFilesystemStack()->chmod($settingsPath, \octdec(664)),
         ]);
     }
 
@@ -438,6 +438,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
 
         // Check if required files/folders exist and they are writable.
         $requiredFiles = [$siteDirectory, $siteDirectory . '/settings.php'];
+
         foreach ($requiredFiles as $requiredFile) {
             if (\file_exists($requiredFile) && !\is_writable($requiredFile)) {
                 throw new \Exception(
