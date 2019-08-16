@@ -11,7 +11,7 @@
     "require": {
         "boedah/robo-drush": "^4.2",
         "jakeasmith/http_build_url": "^1",
-        "phptaskman/core": "^1"
+        "phptaskman/core": "^1.0.5"
     },
     "require-dev": {
         "drupol/php-conventions": "^1.3"

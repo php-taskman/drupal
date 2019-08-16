@@ -313,7 +313,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
             $options['existing-config'] = true;
         }
 
-        $drush = $this->getConfig()->get('taskman.bin_dir') . '/drush';
+        $drush = $this->getConfig()->get('options.bin_dir') . '/drush';
 
         $dbArray = [
             'scheme' => $options['database-scheme'],
