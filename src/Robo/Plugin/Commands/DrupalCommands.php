@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PhpTaskman\Drupal\Robo\Plugin\Commands;
 
@@ -37,8 +37,8 @@ class DrupalCommands extends AbstractDrupalCommands
         'background' => InputOption::VALUE_NONE,
     ])
     {
-        $host = \parse_url($options['base-url'], PHP_URL_HOST);
-        $port = \parse_url($options['base-url'], PHP_URL_PORT);
+        $host = \parse_url($options['base-url'], \PHP_URL_HOST);
+        $port = \parse_url($options['base-url'], \PHP_URL_PORT);
         $port = $port ?? 80;
 
         return $this->taskServer($port)

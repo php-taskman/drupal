@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PhpTaskman\Drupal\Robo\Plugin\Commands;
 
@@ -47,8 +47,8 @@ class Drupal8Commands extends AbstractDrupalCommands
  *
  * Keep this code block at the end of the file.
  */
-if (file_exists(\$app_root . '/' . \$site_path . '/${settings_override_filename}')) {
-  include \$app_root . '/' . \$site_path . '/${settings_override_filename}';
+if (file_exists(\$app_root . '/' . \$site_path . '/{$settings_override_filename}')) {
+  include \$app_root . '/' . \$site_path . '/{$settings_override_filename}';
 }
 EOF;
     }

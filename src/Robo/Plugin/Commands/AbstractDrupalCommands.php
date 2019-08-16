@@ -1,16 +1,16 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PhpTaskman\Drupal\Robo\Plugin\Commands;
 
 use Boedah\Robo\Task\Drush\loadTasks;
 use Consolidation\AnnotatedCommand\CommandData;
-use PhpTaskman\CoreTasks\Plugin\Task\CollectionFactoryTask;
-use PhpTaskman\Drupal\Contract\FilesystemAwareInterface;
-use PhpTaskman\CoreTasks\Plugin\Task\WritePhpTask;
-use PhpTaskman\Drupal\Traits\FilesystemAwareTrait;
 use PhpTaskman\Core\Robo\Plugin\Commands\AbstractCommands;
+use PhpTaskman\CoreTasks\Plugin\Task\CollectionFactoryTask;
+use PhpTaskman\CoreTasks\Plugin\Task\WritePhpTask;
+use PhpTaskman\Drupal\Contract\FilesystemAwareInterface;
+use PhpTaskman\Drupal\Traits\FilesystemAwareTrait;
 use Robo\Common\BuilderAwareTrait;
 use Robo\Common\ResourceExistenceChecker;
 use Robo\Contract\BuilderAwareInterface;
@@ -22,8 +22,8 @@ use Symfony\Component\Yaml\Yaml;
  * Class AbstractDrupalCommands.
  */
 abstract class AbstractDrupalCommands extends AbstractCommands implements
-    FilesystemAwareInterface,
-    BuilderAwareInterface
+    BuilderAwareInterface,
+    FilesystemAwareInterface
 {
     use \Robo\Task\File\loadTasks;
     use BuilderAwareTrait;
@@ -164,7 +164,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
      *
      * @hook command-event *
      */
-    public function setRuntimeConfig(ConsoleCommandEvent $event)
+    public function setRuntimeConfig(ConsoleCommandEvent $event): void
     {
         $rootFullPath = \realpath(
             $this->getConfig()->get('drupal.root')
@@ -427,7 +427,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
      *
      * @throws \Exception
      */
-    public function validateSiteInstall(CommandData $commandData)
+    public function validateSiteInstall(CommandData $commandData): void
     {
         $input = $commandData->input();
 
@@ -445,6 +445,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
 
         // Check if required files/folders exist and they are writable.
         $requiredFiles = [$siteDirectory, $siteDirectory . '/settings.php'];
+
         foreach ($requiredFiles as $requiredFile) {
             if (\file_exists($requiredFile) && !\is_writable($requiredFile)) {
                 throw new \Exception(
