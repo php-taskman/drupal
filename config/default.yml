@@ -3,7 +3,6 @@
 # -----------------------------------------------------------------------------
 #
 # Value of "drupal.root_absolute" is derived at runtime.
-# @see OpenEuropa\TaskRunner\Commands\DrupalCommands::setRuntimeConfig()
 drupal:
     core: 8
     root: "build"
