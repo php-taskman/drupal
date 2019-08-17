@@ -40,7 +40,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
      * - Generate a Drush 8 configuration file at "${drupal.root}/sites/all/default/drushrc.php"
      *
      * Configuration file contents can be customized by editing "drupal.drush"
-     * values in your local runner.yml.dist/runner.yml, as shown below:
+     * values in your local taskman.yml.dist/taskman.yml, as shown below:
      *
      * > drupal:
      * >   drush:
@@ -184,7 +184,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
      * - Append to "settings.php" an include operation for a "settings.override.php" file
      * - Write settings specified at "drupal.settings" in "settings.override.php"
      *
-     * Default settings can be customized in your local runner.yml.dist/runner.yml
+     * Default settings can be customized in your local taskman.yml.dist/taskman.yml
      * as shown below:
      *
      * > drupal:
@@ -255,7 +255,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
      * Install target site.
      *
      * This command will install a target Drupal site using configuration values
-     * provided in local runner.yml.dist/runner.yml files.
+     * provided in local taskman.yml.dist/taskman.yml files.
      *
      * @command drupal:site-install
      *
@@ -358,7 +358,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
      * Run Drupal post-install commands.
      *
      * Commands have to be listed under the "drupal.post_install" property in
-     * your local runner.yml.dist/runner.yml files, as shown below:
+     * your local taskman.yml.dist/taskman.yml files, as shown below:
      *
      * > drupal:
      * >   ...
@@ -391,7 +391,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
      * Run Drupal pre-install commands.
      *
      * Commands have to be listed under the "drupal.pre_install" property in
-     * your local runner.yml.dist/runner.yml files, as shown below:
+     * your local taskman.yml.dist/taskman.yml files, as shown below:
      *
      * > drupal:
      * >   ...
