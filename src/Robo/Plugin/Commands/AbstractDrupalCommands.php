@@ -320,7 +320,7 @@ abstract class AbstractDrupalCommands extends AbstractCommands implements
             'user' => $options['database-user'],
             'pass' => $options['database-password'],
             'host' => $options['database-host'],
-            'port' => $options['database-password'],
+            'port' => $options['database-port'],
             'path' => $options['database-name'],
         ];
         $dbUrl = \http_build_url($dbArray, $dbArray);
